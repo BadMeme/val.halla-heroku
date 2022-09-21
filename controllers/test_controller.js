@@ -51,26 +51,30 @@ router.get("/users", async (req,res)=>{
 //User Show 
 router.get("/profile/:ext", async (req, res) => {
     try {
-        const [profile] = await Models.Player.find({gameName: req.params.ext})
+        let [profile] = await Models.Player.find({gameName: req.params.ext})
         await console.log("user :" + profile)
        
         if (profile.card === null) {
+            console.log("fix it")
             const findAccount = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${profile.gameName}/${profile.tag}`) //change this to api funciton when we are less dumb
+            //await console.log(findAccount)
             let newInfo = await findAccount.json()
-            await console.log ("newInfo: ", newInfo.data.card)
-            let temp = await Models.Player.findByIdAndUpdate(gameProfile._id, {
-                puuid: newInfo.data.puuid,
+            ////console.log(newInfo.data)
+            //await console.log ("newInfo: ", newInfo.data.card)
+            let temp = await Models.Player.findByIdAndUpdate(profile._id, {
                 card: newInfo.data.card
             })
-            await console.log("Test data: ", temp)
-            let profile = temp;    
+            console.log("Temp data: ", temp)
+            let profile = await temp;    
         }
+
+        // if (profile.wr === null) { update it before it gets to the page }
       
         // search match history by data.puuid
         // get w/l, champions, common players from match history
         // package all relevant data and send to user show page as context
 
-        await res.send(profile)
+        res.send(profile)
     } catch(err) {
         console.log(err)
     }

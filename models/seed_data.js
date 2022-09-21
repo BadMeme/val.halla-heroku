@@ -14,17 +14,22 @@ testUsers = [
         //email will write in at function
         tag: "JSON"
     },
-    {
-        username: "SimpMaster69",
-        password: "seed",
-        //email
-        tag: "NA1"
-    },
+    // {
+    //     username: "SimpMaster69",
+    //     password: "seed",
+    //     //email
+    //     tag: "NA1"
+    // },
     {
         username: "dickvaper",
         password: "seed",
         //email
         tag: "mcbee"
+    },
+    {
+        username: "Giotto",
+        password: "seed",
+        tag: "GEN1"
     }
 ]
 
@@ -97,18 +102,44 @@ async function seedPlayers() {
     for (i = 0; i < 100; i++) {
         await createPlayer (playersArr[i])
     }
+    
 }
 
+async function seedTestPlayers() {
+    for (i = 0; i < testUsers.length; i++) {
+        const findAccount = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${testUsers[i].name}/${testUsers[i].tag}`)
+        let testPlayer = await findAccount.json()
+        await console.log("Test Player: ", testPlayer.data)
+        // testPlayer.data.gameName = testUsers[i].username
+        // testPlayer.data.tagline = testUsers[i].tag
+
+        let temp = {
+            puuid: testPlayer.data.puuid,
+            gameName: testUsers[i].username,
+            tagLine: testUsers[i].tag,
+            card: testPlayer.data.card,
+
+
+        }
+        
+        await console.log("Test transform :", temp)
+        await createPlayer (temp)
+    }
+}
 
 async function seedDatabase () {
     await clearDB();
     await console.log("DB cleared")
 
-    seedUsers(testUsers)
+    await seedUsers(testUsers)
+    await console.log("users seeded")
+    // await seedTestPlayers()
+    // await console.log("test players seeded")
+    await seedPlayers();
+    await console.log("top players seeded")
 
     mongoose.connection.close()
 }
 //seedUsers(testUsers);
 
-clearDB();
-seedPlayers();
+seedDatabase ()
