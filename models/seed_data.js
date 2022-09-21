@@ -62,7 +62,8 @@ async function createPlayer (seed) {
             puuid: seed.puuid,
             leaderboardRank: seed.leaderboardRank,
             rankedRating: seed.rankedRating,
-            numberOfWins: seed.numberOfWins
+            numberOfWins: seed.numberOfWins,
+            competitiveTier: seed.competitiveTier,
         })
 
     } catch (err) {
