@@ -21,9 +21,9 @@ router.get('/', async (req, res) =>{
             let leaderBoard = []
             try {
               const response = await fetch('https://api.henrikdev.xyz/valorant/v1/leaderboard/na');
-              console.log("test: ", response)
+              //console.log("test: ", response)
               const lbjson = await response.json()
-              console.log("test: ", lbjson[0])
+              //console.log("test: ", lbjson[0])
               leaderBoard = [lbjson[0], lbjson[1], lbjson[2]]
               res.send(leaderBoard)
             } catch (err) {
