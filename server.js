@@ -28,25 +28,7 @@ app.use("/group", groupController);
 // Routes
 
 app.get("/", (req, res) => {
-  try{
-    async function getLeaderBoard () {
-        let leaderBoard = []
-        try {
-          const response = await fetch('https://api.henrikdev.xyz/valorant/v1/leaderboard/na');
-          //console.log("test: ", response)
-          const lbjson = await response.json()
-          //console.log("test: ", lbjson[0])
-          leaderBoard = [lbjson[0], lbjson[1], lbjson[2]]
-          res.send(leaderBoard)
-        } catch (err) {
-          console.log(err);
-        }
-    }
-
-    getLeaderBoard()
-} catch(err) {
-    console.log(err)
-}
+  res.send("Hello world");
 });
 
 app.listen( PORT, () => {
