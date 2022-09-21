@@ -1,8 +1,9 @@
 
-const { User, Group, Comment } = require('./models')
+const { User, Group, Comment, Player } = require('./models')
 const bcrypt = require('bcrypt')
 const {createUserToken , requireUserToken} = require('../middleware/auth')
 const mongoose = require('mongoose')
+const { response } = require('express')
 
 require('../config/db.connection')
 
@@ -31,6 +32,7 @@ async function clearDB() {
     await User.deleteMany();
     await Group.deleteMany();
     await Comment.deleteMany();
+    await Player.deleteMany();
 }
 
 async function createUser(seed, idx) {
@@ -51,16 +53,57 @@ async function createUser(seed, idx) {
     }
 }
 
+async function createPlayer (seed) {
+    try {
+        await console.log("Seed player: ", seed)
+        await Player.create({
+            gameName: seed.gameName,
+            tag: seed.tagLine,
+            puuid: seed.puuid,
+            leaderboardRank: seed.leaderboardRank,
+        })
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+async function updatePlayer (seed) {
+    try {
+        targetModel = await Player.findOneAndUpdate ({puuid})
+    }
+}
+
 async function seedUsers (arr) {
     
-    await clearDB();
-    console.log("DB cleared")
+    //await clearDB();
+    //console.log("DB cleared")
     
     for (i = 0; i < arr.length; i++) {
         await createUser(arr[i], i)
     }
 
-    mongoose.connection.close()
+    //mongoose.connection.close()
 }
 
-seedUsers(testUsers);
+async function seedPlayers() {
+    const response = await fetch('https://api.henrikdev.xyz/valorant/v1/leaderboard/na');
+    playersArr = await response.json()
+    for (i = 0; i < 100; i++) {
+        await createPlayer (playersArr[i])
+    }
+}
+
+
+async function seedDatabase () {
+    await clearDB();
+    await console.log("DB cleared")
+
+    seedUsers(testUsers)
+
+    mongoose.connection.close()
+}
+//seedUsers(testUsers);
+
+clearDB();
+seedPlayers();

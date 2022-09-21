@@ -20,12 +20,12 @@ router.get('/', async (req, res) =>{
         async function getLeaderBoard () {
             let leaderBoard = []
             try {
-              const response = await fetch('https://api.henrikdev.xyz/valorant/v1/leaderboard/na');
+              const response = await Models.Player.find({leaderboardRank: {$gte: 1} && {$lte: 4}})
               //console.log("test: ", response)
-              const lbjson = await response.json()
+              //const lbjson = await response.json()
               //console.log("test: ", lbjson[0])
-              leaderBoard = [lbjson[0], lbjson[1], lbjson[2]]
-              res.send(leaderBoard)
+              //leaderBoard = [lbjson[0], lbjson[1], lbjson[2], lbjson[3]]
+              res.send(response) //currently fetching leaderboard from the backend instead of API call
             } catch (err) {
               console.log(err);
             }
@@ -51,22 +51,39 @@ router.get("/users", async (req,res)=>{
 router.get("/profile/:ext", async (req, res) => {
     try {
         let user = await Models.User.find({username: req.params.ext})
-        //await console.log ("user.info: ", user[0].puuid)
-        //await console.log ("card info: ", data.data.card)
-        if (user[0].puuid === null) {
-            const findAccount = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${user[0].username}/${user[0].tag}`) //change this to api funciton when we are less dumb
+        await console.log("user :" + user)
+        const findAccount = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${user[0].username}/${user[0].tag}`) //change this to api funciton when we are less dumb
             const data = await findAccount.json()
-            let user = await Models.User.findByIdAndUpdate(user[0]._id, {
-                puuid: data.data.puuid,
-                card: data.data.card
-            })
-        }   
+            // const player = await Models.Player.create({
+            //     puuid: data.data.puuid,
+            //     card: data.data.card,
+            // })
+            // await Models.User.findByIdAndUpdate(user._uid, {
+            //     puuid: player.puuid,
+            //     linkedPlayer: player._id
+            // })
+        
+        // let user = await Models.User.find({username: req.params.ext})
+        // await console.log ("user.info: ", user[0].puuid)
+        // //await console.log ("card info: ", data.data.card)
+        // if (user[0].puuid == null) {
+        //     const findAccount = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${user[0].username}/${user[0].tag}`) //change this to api funciton when we are less dumb
+        //     const data = await findAccount.json()
+        //     const player = await Models.Player.create({
+        //         puuid: data.data.puuid,
+        //         card: data.data.card,
+        //     })
+        //     await Models.User.findByIdAndUpdate(user._uid, {
+        //         puuid: player.puuid,
+        //         linkedPlayer: player._id
+        //     })
+        // }   
 
         // search match history by data.puuid
         // get w/l, champions, common players from match history
         // package all relevant data and send to user show page as context
 
-        res.send(user)
+        res.send(data)
     } catch(err) {
         console.log(err)
     }
