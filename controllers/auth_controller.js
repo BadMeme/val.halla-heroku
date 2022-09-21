@@ -11,7 +11,7 @@ const bcrypt = require('bcrypt')
 ////////////////////////////////
 
 const { User } = require("../models/models.js");
-const {createUserToken} = require('../middleware/auth')
+const {createUserToken , requireUserToken} = require('../middleware/auth')
 
 ///////////////////////////////
 // ROUTES
@@ -23,12 +23,14 @@ router.post("/register", async (req, res) => {
     const salt = await bcrypt.genSalt(10)
     const passwordHash = await bcrypt.hash(req.body.password, salt)
     req.body.password = passwordHash
+    console.log("Req: ", req.body)
     const newUser = await User.create(req.body)
+    console.log("Testing: ", newUser)
     // what happens if null is return 
     // mongoose - virtuals -> remove password from returned JSON
     res.status(200).json({currentUser: newUser, isLoggedIn: true, })
   }catch(err){
-    res.status(400).json({error: err.message})
+    res.status(400).json({error: err})
   }
 });
 
