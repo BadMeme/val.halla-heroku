@@ -14,6 +14,29 @@ const {createUserToken} = require('../middleware/auth')
 
 // Routes ('/test/:ext')
 
+//test home
+router.get('/', async (req, res) =>{
+    try{
+        async function getLeaderBoard () {
+            let leaderBoard = []
+            try {
+              const response = await fetch('https://api.henrikdev.xyz/valorant/v1/leaderboard/na');
+              console.log("test: ", response)
+              const lbjson = await response.json()
+              console.log("test: ", lbjson[0])
+              leaderBoard = [lbjson[0], lbjson[1], lbjson[2]]
+              res.send(leaderBoard)
+            } catch (err) {
+              console.log(err);
+            }
+        }
+
+        getLeaderBoard()
+    } catch(err) {
+        console.log(err)
+    }
+})
+
 // Users Index
 router.get("/users", async (req,res)=>{
     try{
@@ -39,7 +62,7 @@ router.get("/profile/:ext", async (req, res) => {
         // get w/l, champions, common players from match history
         // package all relevant data and send to user show page as context
 
-        res.send(user)
+        res.send(data)
     } catch(err) {
         console.log(err)
     }
