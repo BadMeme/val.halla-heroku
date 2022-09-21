@@ -14,6 +14,7 @@ const userSchema = new Schema ({
     groups: [{type: mongoose.Types.ObjectId, ref: 'Group', default: null},], 
     comments: [{type: mongoose.Types.ObjectId, ref: 'Comment', default: null},],
     puuid: {type: String, default: null}, //for referencing other API calls
+    card: {type: Object, default: null},
     favagent: {type: String, default: null}, //lists most played agent
     favgun: {type: String, default: null}, //list most used gun
     wr: {type: Number, default: null}, //displays winrate
