@@ -13,15 +13,13 @@ const userSchema = new Schema ({
     avatar: {type: String}, 
     groups: [{type: mongoose.Types.ObjectId, ref: 'Group', default: null},], 
     comments: [{type: mongoose.Types.ObjectId, ref: 'Comment', default: null},],
-    //
-    //  puuid: {} //for referencing other API calls
-    //  favagent: {} //lists most played agent
-    //  favgun: {} //list most used gun
-    //  wr: {} //displays winrate
-    //  kda: {} //displays kda
-    //  rank: {} //displays rank
-    //
-    //  commonAlly: [] //derived from match history, lists teammates that are in multiple games 
+    puuid: {type: String, default: null}, //for referencing other API calls
+    favagent: {type: String, default: null}, //lists most played agent
+    favgun: {type: String, default: null}, //list most used gun
+    wr: {type: Number, default: null}, //displays winrate
+    kda: {type: Number, default: null}, //displays kda
+    rank: {type: Number, default: null}, //displays rank
+    commonAlly: [{type: String, default: null}] //derived from match history, lists teammates that are in multiple games 
     //
 },{
     timestamps: true,
