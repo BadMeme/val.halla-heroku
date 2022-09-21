@@ -9,9 +9,19 @@ const userSchema = new Schema ({
     username: {type: String, required: true, unique: true },
     password: {type: String, required: true}, 
     email: {type: String, required: true, unique: true},
+    tag: {type: String, required: true},
     avatar: {type: String}, 
     groups: [{type: mongoose.Types.ObjectId, ref: 'Group', default: null},], 
     comments: [{type: mongoose.Types.ObjectId, ref: 'Comment', default: null},],
+    //
+    //  puuid: {} //for referencing other API calls
+    //  favagent: {} //lists most played agent
+    //  favgun: {} //list most used gun
+    //  wr: {} //displays winrate
+    //  kda: {} //displays kda
+    //  rank: {} //displays rank
+    //
+    //  commonAlly: [] //derived from match history, lists teammates that are in multiple games 
     //
 },{
     timestamps: true,

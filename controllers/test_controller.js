@@ -4,6 +4,8 @@ const bcrypt = require ('bcrypt');
 const methodOverride = require('method-override')
 
 //middleware
+const api = require('unofficial-valorant-api')
+
 
 // Model Import
 const Models = require('../models/models.js');
@@ -25,8 +27,19 @@ router.get("/users", async (req,res)=>{
 //User Show 
 router.get("/profile/:ext", async (req, res) => {
     try {
-        user = await Models.User.findById(req.params.ext)
-        res.send("this works")
+        const user = await Models.User.find({username: req.params.ext})
+        if (user.tag === null) {
+            res.send("No tag for this user")
+        }        
+        const findAccount = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${user[0].username}/${user[0].tag}`) //change this to api funciton when we are less dumb
+        const data = await findAccount.json()
+        console.log("api return: ", data)
+
+        // search match history by data.puuid
+        // get w/l, champions, common players from match history
+        // package all relevant data and send to user show page as context
+
+        res.send(user)
     } catch(err) {
         console.log(err)
     }
@@ -47,6 +60,7 @@ router.put('/update', async (req, res) => {
     try {
         res.json(
         await Models.User.findByIdAndUpdate(req.body._id, {avatar: req.body.avatar})
+        //will probably rework or add anothe update route to include joining/leaving groups
         )
     } catch(err) {
         console.log(err)
@@ -58,6 +72,7 @@ router.delete('/delete', async (req, res) => {
     try {
         res.json(
         await Models.User.findByIdAndDelete(req.body._id)
+        //will need to search database and delete other models tied to user's ._id
         )
     } catch(err) {
         console.log(err)
