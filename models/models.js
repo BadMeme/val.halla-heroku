@@ -12,15 +12,7 @@ const userSchema = new Schema ({
     tag: {type: String, required: true},
     avatar: {type: String}, 
     groups: [{type: mongoose.Types.ObjectId, ref: 'Group', default: null},], 
-    comments: [{type: mongoose.Types.ObjectId, ref: 'Comment', default: null},],
-    puuid: {type: String, default: null}, //for referencing other API calls
-    card: {type: Object, default: null},
-    favagent: {type: String, default: null}, //lists most played agent
-    favgun: {type: String, default: null}, //list most used gun
-    wr: {type: Number, default: null}, //displays winrate
-    kda: {type: Number, default: null}, //displays kda
-    rank: {type: Number, default: null}, //displays rank
-    commonAlly: [{type: String, default: null}], //derived from match history, lists teammates that are in multiple games 
+    comments: [{type: mongoose.Types.ObjectId, ref: 'Comment', default: null},],  
     linkedPlayer: {type: mongoose.Types.ObjectId, ref: 'Player', default: null}
     //
 },{
@@ -47,6 +39,9 @@ const playerSchema = new Schema ({
     kda: {type: Number, default: null}, //displays kda
     rank: {type: Number, default: null}, //displays rank
     leaderboardRank: {type: Number, default: null},
+    rankedRating: {type: Number, default: null},
+    numberOfWins: {type: Number, default: 0},
+    competitiveTier: {type: String, default: null},
     commonAlly: [{type: String, default: null}], //derived from match history, lists teammates that are in multiple games
     linkedAccount: {type: mongoose.Types.ObjectId, default: null, ref: 'User'} 
 })

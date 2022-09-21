@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require ('bcrypt');
-const methodOverride = require('method-override')
+const methodOverride = require('method-override');
+const axios = require('axios');
 
 //middleware
-const api = require('unofficial-valorant-api')
+//const api = require('unofficial-valorant-api')
 
 
 // Model Import
@@ -50,9 +51,9 @@ router.get("/users", async (req,res)=>{
 //User Show 
 router.get("/profile/:ext", async (req, res) => {
     try {
-        let user = await Models.User.find({username: req.params.ext})
-        await console.log("user :" + user)
-        const findAccount = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${user[0].username}/${user[0].tag}`) //change this to api funciton when we are less dumb
+        let gameProfile = await Models.Player.find({gameName: req.params.ext})
+        await console.log("user :" + gameProfile)
+        const findAccount = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${gameProfile[0].gameName}/${gameProfile[0].tag}`) //change this to api funciton when we are less dumb
             const data = await findAccount.json()
             // const player = await Models.Player.create({
             //     puuid: data.data.puuid,

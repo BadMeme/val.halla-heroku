@@ -61,6 +61,8 @@ async function createPlayer (seed) {
             tag: seed.tagLine,
             puuid: seed.puuid,
             leaderboardRank: seed.leaderboardRank,
+            rankedRating: seed.rankedRating,
+            numberOfWins: seed.numberOfWins
         })
 
     } catch (err) {
@@ -70,7 +72,9 @@ async function createPlayer (seed) {
 
 async function updatePlayer (seed) {
     try {
-        targetModel = await Player.findOneAndUpdate ({puuid})
+    
+    } catch (err) {
+
     }
 }
 
