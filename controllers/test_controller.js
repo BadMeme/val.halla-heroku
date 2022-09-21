@@ -60,9 +60,7 @@ router.get("/profile/:ext", async (req, res) => {
                 puuid: data.data.puuid,
                 card: data.data.card
             })
-            await console.log("update testing: ", user)
         }   
-        console.log("api return: ", user)
 
         // search match history by data.puuid
         // get w/l, champions, common players from match history
@@ -75,16 +73,17 @@ router.get("/profile/:ext", async (req, res) => {
 })
 
 //User update page
-router.get("/profile/:ext/update", async (req,res) => {
+router.get("/update/:ext", async (req,res) => {
     try {
-        user = await Models.User.findById(req.params.ext)
-        res.send("this works 2")
+        const user = await Models.User.find({username: req.params.ext})
+        //console.log("hows this: ", user)
+        res.send(user)
     } catch(err) {
         console.log(err)
     }
 })
 
-//User Update put
+//User Update put //may need to refactor 
 router.put('/update', async (req, res) => {
     try {
         res.json(
