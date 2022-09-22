@@ -57,7 +57,7 @@ router.get("/profile/:ext/:tag", async (req, res) => {
         // console.log("user: " + profile)
         
         //let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${profile.gameName}/${profile.tag}`)
-        let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${preq.params.ext}/${req.params.tag}`)
+        let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`)
         let data = await real.json();
 
         //console.log("Fest test: ", apiData.data)
