@@ -65,8 +65,9 @@ router.get("/profile/:ext/:tag", async (req, res) => {
         //console.log("Resonse 2: ", response2)
         const data2 = await real2.json();
 
-        const real3 = await fetch(`https://api.henrikdev.xyz/valorant/v3/by-puuid/matches/na/${data.data.puuid}`)
-        const data3 = await real3.json();
+        // const real3 = await fetch(`https://api.henrikdev.xyz/valorant/v3/by-puuid/matches/na/${data.data.puuid}`)
+        // const data3 = await real3.json();
+        // this might be too much
 
         const info = {
             puuid: data.data.puuid,
@@ -79,7 +80,7 @@ router.get("/profile/:ext/:tag", async (req, res) => {
             elo: data2.data.elo,
             images: data2.data.images,// {lareg, small, triangle_down, triangle_up}, //this is rank
             ranking_in_tier: data2.data.ranking_in_tier, 
-            matchHistory_small: data3.data,
+            matchHistory_small: "Work in progress", //data3.data,
             //The following is derived data that i will calulate above
             wr: "Testing",
             favHeros: ["Testing", "OneTwo", "Three"],
@@ -88,13 +89,13 @@ router.get("/profile/:ext/:tag", async (req, res) => {
         }
         // if (profile.wr === null) { update it before it gets to the page }
         
-        const context = await info.json()
+        //const context = await info.json()
         
         // search match history by data.puuid
         // get w/l, champions, common players from match history
         // package all relevant data and send to user show page as context
 
-        res.send(context)
+        res.send(info)
     } catch(err) {
         console.log(err)
     }
