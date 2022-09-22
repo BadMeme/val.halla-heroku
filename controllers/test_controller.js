@@ -68,7 +68,7 @@ router.get("/profile/:ext/:tag", async (req, res) => {
         const real3 = await fetch(`https://api.henrikdev.xyz/valorant/v3/by-puuid/matches/na/${data.data.puuid}`)
         const data3 = await real3.json();
 
-        const context = {
+        const info = {
             puuid: data.data.puuid,
             name: data.data.name,
             tag: data.data.tag,
@@ -87,7 +87,9 @@ router.get("/profile/:ext/:tag", async (req, res) => {
             friends: ["This will take math"]
         }
         // if (profile.wr === null) { update it before it gets to the page }
-      
+        
+        const context = await info.json()
+        
         // search match history by data.puuid
         // get w/l, champions, common players from match history
         // package all relevant data and send to user show page as context
