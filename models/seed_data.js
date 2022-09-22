@@ -4,6 +4,11 @@ const bcrypt = require('bcrypt')
 const {createUserToken , requireUserToken} = require('../middleware/auth')
 const mongoose = require('mongoose')
 const { response } = require('express')
+//import djfsiofjd from 'unofficial-valorant-api'
+
+// const axios = require('axios');
+// const VAPI = require('unofficial-valorant-api')
+// const VAPI = new api();
 
 require('../config/db.connection')
 
@@ -11,19 +16,16 @@ testUsers = [
     {
         username: "heaviside",
         password: "seed",
-        //email will write in at function
         tag: "JSON"
     },
     // {
     //     username: "SimpMaster69",
     //     password: "seed",
-    //     //email
     //     tag: "NA1"
     // },
     {
         username: "dickvaper",
         password: "seed",
-        //email
         tag: "mcbee"
     },
     {
@@ -76,9 +78,18 @@ async function createPlayer (seed) {
     }
 }
 
-async function updatePlayer (seed) {
+async function updatePlayers () {
     try {
-    
+        const playerbase = await Player.find()
+        for (i=0; i < playerbase.length; i++) {
+            let findData = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${playerbase[i].gameName}/${playerbase[i].tag}`) 
+            let changes = await findData.json()
+            await console.log("testing: ", i)
+            // let [temp] = await Player.findByIdAndUpdate(playerbase[i]._id, {
+
+            // })
+        }
+
     } catch (err) {
 
     }
@@ -142,4 +153,9 @@ async function seedDatabase () {
 }
 //seedUsers(testUsers);
 
-seedDatabase ()
+//seedDatabase ()
+
+//updatePlayers()
+
+console.log(VAPI.getAccount({name: "heaviside", tag: "JSON"}))
+mongoose.connection.close()

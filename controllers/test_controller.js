@@ -48,33 +48,55 @@ router.get("/users", async (req,res)=>{
     }
 })
 
-//User Show 
+//Profile Show 
 router.get("/profile/:ext", async (req, res) => {
     try {
         let [profile] = await Models.Player.find({gameName: req.params.ext})
-        await console.log("user :" + profile)
-       
-        if (profile.card === null) {
-            console.log("fix it")
-            const findAccount = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${profile.gameName}/${profile.tag}`) //change this to api funciton when we are less dumb
-            //await console.log(findAccount)
-            let newInfo = await findAccount.json()
-            ////console.log(newInfo.data)
-            //await console.log ("newInfo: ", newInfo.data.card)
-            let temp = await Models.Player.findByIdAndUpdate(profile._id, {
-                card: newInfo.data.card
-            })
-            console.log("Temp data: ", temp)
-            let profile = await temp;    
-        }
+        console.log("user: " + profile)
+        
+        let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${profile.gameName}/${profile.tag}`)
+        let data = await real.json();
 
+        //console.log("Fest test: ", apiData.data)
+        const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`)
+        //console.log("Resonse 2: ", response2)
+        const data2 = await real2.json();
+
+        const real3 = await fetch(`https://api.henrikdev.xyz/valorant/v3/by-puuid/matches/na/${data.data.puuid}`)
+        const data3 = await real3.json();
+
+        const context = {
+            puuid: data.data.puuid,
+            name: data.data.name,
+            tag: data.data.tag,
+            region: data.data.region,
+            account_level: data.data.account_level,
+            card: data.data.card,
+            currenttier: data2.data.currenttier,
+            elo: data2.data.elo,
+            images: data2.data.images,// {lareg, small, triangle_down, triangle_up}, //this is rank
+            ranking_in_tier: data2.data.ranking_in_tier, 
+            matchHistory_small: data3.data
+        }
         // if (profile.wr === null) { update it before it gets to the page }
       
         // search match history by data.puuid
         // get w/l, champions, common players from match history
         // package all relevant data and send to user show page as context
 
-        res.send(profile)
+        res.send(context)
+    } catch(err) {
+        console.log(err)
+    }
+})
+
+//User Show
+
+router.get("/user/:ext", async (req,res) => {
+    try {
+        const user = await Models.User.find({username: req.params.ext})
+        //console.log("hows this: ", user)
+        res.send(user)
     } catch(err) {
         console.log(err)
     }
