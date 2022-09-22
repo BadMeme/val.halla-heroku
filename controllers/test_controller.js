@@ -71,34 +71,10 @@ router.get("/profile/:ext/", async (req, res) => {
         console.log(err)
     }
 
-}
+})
 
-//Profile Show 
-router.get("/profile/:ext/", async (req, res) => {
-
-    const options = {
-        method: "GET",
-        headers: {
-          Authorization: REACT_APP_API_KEY,
-        },
-    }
-
-    try {
-        let [profile] = await Models.Player.find({gameName: req.params.ext})
-        console.log("user: " + profile)
-        data = await profile.json();
-        res.send(data)
-
-
-    } catch (err) {
-        console.log(err)
-    }
-
-}
-
-
-//Profile Show TEST
-// router.get("/profile/:ext/:tag", async (req, res) => {
+// //Profile Show 
+// router.get("/profile/:ext/", async (req, res) => {
 
 //     const options = {
 //         method: "GET",
@@ -106,58 +82,82 @@ router.get("/profile/:ext/", async (req, res) => {
 //           Authorization: REACT_APP_API_KEY,
 //         },
 //     }
+
+//     try {
+//         let [profile] = await Models.Player.find({gameName: req.params.ext})
+//         console.log("user: " + profile)
+//         data = await profile.json();
+//         res.send(data)
+
+
+//     } catch (err) {
+//         console.log(err)
+//     }
+
+// })
+
+
+//Profile Show TEST
+router.get("/profile/:ext/:tag", async (req, res) => {
+
+    const options = {
+        method: "GET",
+        headers: {
+          Authorization: REACT_APP_API_KEY,
+        },
+    }
     
   
 
-//     try {
-//         // let [profile] = await Models.Player.find({gameName: req.params.ext})
-//         // console.log("user: " + profile)
+    try {
+        // let [profile] = await Models.Player.find({gameName: req.params.ext})
+        // console.log("user: " + profile)
         
-//         //let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${profile.gameName}/${profile.tag}`)
-//         let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`, options)
-//         let data = await real.json();
+        //let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${profile.gameName}/${profile.tag}`)
+        let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`, options)
+        let data = await real.json();
 
-//         //console.log("Fest test: ", apiData.data)
-//         const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`, options)
-//         //console.log("Resonse 2: ", response2)
-//         const data2 = await real2.json();
+        //console.log("Fest test: ", apiData.data)
+        const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`, options)
+        //console.log("Resonse 2: ", response2)
+        const data2 = await real2.json();
 
-//         // const real3 = await fetch(`https://api.henrikdev.xyz/valorant/v3/by-puuid/matches/na/${data.data.puuid}`)
-//         // const data3 = await real3.json();
-//         // this might be too much
+        // const real3 = await fetch(`https://api.henrikdev.xyz/valorant/v3/by-puuid/matches/na/${data.data.puuid}`)
+        // const data3 = await real3.json();
+        // this might be too much
 
-//         const info = {
-//             puuid: data.data.puuid,
-//             name: data.data.name,
-//             tag: data.data.tag,
-//             region: data.data.region,
-//             account_level: data.data.account_level,
-//             card: data.data.card,
-//             currenttier: data2.data.currenttier,
-//             elo: data2.data.elo,
-//             images: data2.data.images,// {lareg, small, triangle_down, triangle_up}, //this is rank
-//             ranking_in_tier: data2.data.ranking_in_tier, 
-//             matchHistory_small: "Work in progress", //data3.data,
-//             //The following is derived data that i will calulate above
-//             wr: "Testing",
-//             favHeros: ["Testing", "OneTwo", "Three"],
-//             favGun: "Gun",
-//             friends: ["This will take math"]
-//         }
-//         // if (profile.wr === null) { update it before it gets to the page }
+        const info = {
+            puuid: data.data.puuid,
+            name: data.data.name,
+            tag: data.data.tag,
+            region: data.data.region,
+            account_level: data.data.account_level,
+            card: data.data.card,
+            currenttier: data2.data.currenttier,
+            elo: data2.data.elo,
+            images: data2.data.images,// {lareg, small, triangle_down, triangle_up}, //this is rank
+            ranking_in_tier: data2.data.ranking_in_tier, 
+            matchHistory_small: "Work in progress", //data3.data,
+            //The following is derived data that i will calulate above
+            wr: "Testing",
+            favHeros: ["Testing", "OneTwo", "Three"],
+            favGun: "Gun",
+            friends: ["This will take math"]
+        }
+        // if (profile.wr === null) { update it before it gets to the page }
 
         
-//         //const context = await info.json();
+        //const context = await info.json();
         
-//         // search match history by data.puuid
-//         // get w/l, champions, common players from match history
-//         // package all relevant data and send to user show page as context
+        // search match history by data.puuid
+        // get w/l, champions, common players from match history
+        // package all relevant data and send to user show page as context
 
-//         res.send(info)
-//     } catch(err) {
-//         console.log(err)
-//     }
-// })
+        res.send(info)
+    } catch(err) {
+        console.log(err)
+    }
+})
 
 //User Show
 
