@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require ('bcrypt');
 const methodOverride = require('method-override');
 const axios = require('axios');
-const fetcher = require('node-fetch');    //npm install node-fetch
+const fetch = require('node-fetch');    //npm install node-fetch
 require('dotenv').config()
 
 const { REACT_APP_API_KEY } = process.env
@@ -110,11 +110,11 @@ router.get("/profile/:ext/:tag", async (req, res) => {
 
     try {
         
-        let real = await fetcher(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`, options)
+        let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`)
         let data = await real.json();
 
         //console.log("Fest test: ", apiData.data)
-        const real2 = await fetcher(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`, options)
+        const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`)
         //console.log("Resonse 2: ", response2)
         const data2 = await real2.json();
 
