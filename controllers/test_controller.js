@@ -48,13 +48,16 @@ router.get("/users", async (req,res)=>{
     }
 })
 
+
+
 //Profile Show 
-router.get("/profile/:ext", async (req, res) => {
+router.get("/profile/:ext/:tag", async (req, res) => {
     try {
-        let [profile] = await Models.Player.find({gameName: req.params.ext})
-        console.log("user: " + profile)
+        // let [profile] = await Models.Player.find({gameName: req.params.ext})
+        // console.log("user: " + profile)
         
-        let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${profile.gameName}/${profile.tag}`)
+        //let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${profile.gameName}/${profile.tag}`)
+        let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${preq.params.ext}/${req.params.tag}`)
         let data = await real.json();
 
         //console.log("Fest test: ", apiData.data)
@@ -76,7 +79,12 @@ router.get("/profile/:ext", async (req, res) => {
             elo: data2.data.elo,
             images: data2.data.images,// {lareg, small, triangle_down, triangle_up}, //this is rank
             ranking_in_tier: data2.data.ranking_in_tier, 
-            matchHistory_small: data3.data
+            matchHistory_small: data3.data,
+            //The following is derived data that i will calulate above
+            wr: "Testing",
+            favHeros: ["Testing", "OneTwo", "Three"],
+            favGun: "Gun",
+            friends: ["This will take math"]
         }
         // if (profile.wr === null) { update it before it gets to the page }
       
