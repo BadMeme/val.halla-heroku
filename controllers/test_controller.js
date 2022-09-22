@@ -3,7 +3,9 @@ const router = express.Router();
 const bcrypt = require ('bcrypt');
 const methodOverride = require('method-override');
 const axios = require('axios');
+require('dotenv').config()
 
+const { REACT_APP_API_KEY } = process.env
 //middleware
 //const api = require('unofficial-valorant-api')
 
@@ -52,16 +54,24 @@ router.get("/users", async (req,res)=>{
 
 //Profile Show 
 router.get("/profile/:ext/:tag", async (req, res) => {
+
+    const options = {
+        method: "GET",
+        headers: {
+          Authorization: REACT_APP_API_KEY,
+        },
+    }
+
     try {
         // let [profile] = await Models.Player.find({gameName: req.params.ext})
         // console.log("user: " + profile)
         
         //let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${profile.gameName}/${profile.tag}`)
-        let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`)
+        let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`, options)
         let data = await real.json();
 
         //console.log("Fest test: ", apiData.data)
-        const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`)
+        const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`, options)
         //console.log("Resonse 2: ", response2)
         const data2 = await real2.json();
 
@@ -88,8 +98,9 @@ router.get("/profile/:ext/:tag", async (req, res) => {
             friends: ["This will take math"]
         }
         // if (profile.wr === null) { update it before it gets to the page }
+
         
-        //const context = await info.json()
+        //const context = await info.json();
         
         // search match history by data.puuid
         // get w/l, champions, common players from match history
