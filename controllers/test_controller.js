@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require ('bcrypt');
 const methodOverride = require('method-override');
 const axios = require('axios');
+const fetch = require('node-fetch');    //npm install node-fetch
 require('dotenv').config()
 
 const { REACT_APP_API_KEY } = process.env
@@ -106,8 +107,6 @@ router.get("/profile/:ext/:tag", async (req, res) => {
           Authorization: REACT_APP_API_KEY,
         },
     }
-    
-  
 
     try {
         // let [profile] = await Models.Player.find({gameName: req.params.ext})
