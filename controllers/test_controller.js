@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require ('bcrypt');
 const methodOverride = require('method-override');
 const axios = require('axios');
-const fetch = require('node-fetch');    //npm install node-fetch
+//const fetch = require('node-fetch');    //npm install node-fetch
 require('dotenv').config()
 
 const { REACT_APP_API_KEY } = process.env
