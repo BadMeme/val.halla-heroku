@@ -88,7 +88,7 @@ router.get('/test', async (req, res) =>{
                     friends: ["This will take math"]
                 }
 
-                res.send (step2)
+                res.send (info)
             } catch (err) {
                 console.log(err);
             }
