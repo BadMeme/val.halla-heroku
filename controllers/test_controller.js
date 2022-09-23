@@ -3,12 +3,16 @@ const router = express.Router();
 const bcrypt = require ('bcrypt');
 const methodOverride = require('method-override');
 const axios = require('axios');
-//const fetch = require('node-fetch');    //npm install node-fetch
+    //npm install node-fetch
+    //import fetch from 'node-fetch';
 require('dotenv').config()
 
 const { REACT_APP_API_KEY } = process.env
 //middleware
-//const api = require('unofficial-valorant-api')
+const poop = require('unofficial-valorant-api')
+const testPoop = new poop()
+
+
 
 
 // Model Import
@@ -24,14 +28,44 @@ router.get('/', async (req, res) =>{
         async function getLeaderBoard () {
             let leaderBoard = []
             try {
-              const response = await Models.Player.find({leaderboardRank: {$gte: 1} && {$lte: 4}})
-              //console.log("test: ", response)
-              //const lbjson = await response.json()
-              //console.log("test: ", lbjson[0])
-              //leaderBoard = [lbjson[0], lbjson[1], lbjson[2], lbjson[3]]
-              res.send(response) //currently fetching leaderboard from the backend instead of API call
+                const response = await Models.Player.find({leaderboardRank: {$gte: 1} && {$lte: 4}})
+                console.log("test: ", response)
+                const lbjson = await response.json()
+                console.log("test: ", lbjson[0])
+                leaderBoard = [lbjson[0], lbjson[1], lbjson[2], lbjson[3]]
+                res.send(test) //currently fetching leaderboard from the backend instead of API call
             } catch (err) {
-              console.log(err);
+                console.log(err);
+            }
+        }
+
+        getLeaderBoard()
+    } catch(err) {
+        console.log(err)
+    }
+})
+
+router.get('/test', async (req, res) =>{
+    try{
+        async function getLeaderBoard () {
+            let leaderBoard = []
+            try {
+                //test = new poop()
+                const test = await testPoop.getMMR({
+                    version: 'v1',
+                    region: 'na',
+                    name: "C9 Xeppaa",
+                    tag: 'XITER'
+
+                })
+
+                const step1 = await testPoop.getAccount({
+                    name: 'heaviside',
+                    tag: 'JSON'
+                })
+                res.send (step1)
+            } catch (err) {
+                console.log(err);
             }
         }
 
