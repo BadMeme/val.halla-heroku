@@ -10,7 +10,7 @@ require('dotenv').config()
 const { REACT_APP_API_KEY } = process.env
 //middleware
 const apiAccess = require('unofficial-valorant-api')
-const testPoop = new apiAccess()
+const test = new apiAccess()
 
 const getThisBread = new apiAccess()
 
@@ -18,7 +18,6 @@ const getThisBread = new apiAccess()
 // Model Import
 const Models = require('../models/models.js');
 const {createUserToken} = require('../middleware/auth')
-
 
 // Routes ('/test/:ext')
 
@@ -59,12 +58,12 @@ router.get('/test', async (req, res) =>{
 
                 // })
 
-                const step1 = await testPoop.getAccount({
+                const step1 = await test.getAccount({
                     name: 'C9 Xeppaa',
                     tag: 'XITER'
                 })
 
-                const step2 = await testPoop.getMatchesByPUUID({
+                const step2 = await test.getMatchesByPUUID({
                     region: step1.data.region,
                     puuid: step1.data.puuid,
                 })
