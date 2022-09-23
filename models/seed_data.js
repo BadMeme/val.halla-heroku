@@ -18,11 +18,11 @@ testUsers = [
         password: "seed",
         tag: "JSON"
     },
-    // {
-    //     username: "SimpMaster69",
-    //     password: "seed",
-    //     tag: "NA1"
-    // },
+    {
+        username: "SimpMaster69",
+        password: "seed",
+        tag: "NA1"
+    },
     {
         username: "dickvaper",
         password: "seed",
@@ -151,4 +151,5 @@ async function seedDatabase () {
 
     mongoose.connection.close()
 }
-//seedUsers(testUsers);
+
+seedDatabase ()
