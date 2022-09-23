@@ -51,19 +51,44 @@ router.get('/test', async (req, res) =>{
             let leaderBoard = []
             try {
                 //test = new poop()
-                const test = await testPoop.getMMR({
-                    version: 'v1',
-                    region: 'na',
-                    name: "C9 Xeppaa",
-                    tag: 'XITER'
+                // const test = await testPoop.getMMR({
+                //     version: 'v1',
+                //     region: 'na',
+                //     name: "C9 Xeppaa",
+                //     tag: 'XITER'
 
-                })
+                // })
 
                 const step1 = await testPoop.getAccount({
-                    name: 'heaviside',
-                    tag: 'JSON'
+                    name: 'C9 Xeppaa',
+                    tag: 'XITER'
                 })
-                res.send (step1)
+
+                const step2 = await testPoop.getMatchesByPUUID({
+                    region: step1.data.region,
+                    puuid: step1.data.puuid,
+                })
+
+                // const info = {
+                //     puuid: data.data.puuid,
+                //     name: data.data.name,
+                //     tag: data.data.tag,
+                //     region: data.data.region,
+                //     account_level: data.data.account_level,
+                //     card: data.data.card,
+                //     currenttier: data2.data.currenttier,
+                //     elo: data2.data.elo,
+                //     images: data2.data.images,// {lareg, small, triangle_down, triangle_up}, //this is rank
+                //     ranking_in_tier: data2.data.ranking_in_tier, 
+                //     matchHistory_small: "Work in progress", //data3.data,
+                //     //The following is derived data that i will calulate above
+                //     wr: "Testing",
+                //     favHeros: ["Testing", "OneTwo", "Three"],
+                //     favGun: "Gun",
+                //     friends: ["This will take math"]
+                // }
+
+                res.send (step2)
             } catch (err) {
                 console.log(err);
             }
