@@ -9,10 +9,10 @@ require('dotenv').config()
 
 const { REACT_APP_API_KEY } = process.env
 //middleware
-const poop = require('unofficial-valorant-api')
-const testPoop = new poop()
+const apiAccess = require('unofficial-valorant-api')
+const testPoop = new apiAccess()
 
-
+const getThisBread = new apiAccess()
 
 
 // Model Import
@@ -170,13 +170,25 @@ router.get("/profile/:ext/:tag", async (req, res) => {
 
     try {
         
-        const real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`, options)
-        const data = await real.json();
+
+        const getAcct = await getThisBread.getAccount({
+            name: req.params.ext,
+            tag: req.params.tag
+        })
+        const data = await getAcct.json();
+        //const real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`, options)
+        //const data = await real.json();
+
+        const getAcctData = await getThisBread.getMatchesByPUUID({
+            region: one.data.region,
+            puuid: one.data.puuid,
+        })
+        const data2 = await getAcctData.json();
 
         //console.log("Fest test: ", apiData.data)
-        const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`, options)
+        //const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`, options)
         //console.log("Resonse 2: ", response2)
-        const data2 = await real2.json();
+        //const data2 = await real2.json();
 
         // const real3 = await fetch(`https://api.henrikdev.xyz/valorant/v3/by-puuid/matches/na/${data.data.puuid}`)
         // const data3 = await real3.json();
