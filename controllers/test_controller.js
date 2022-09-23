@@ -111,17 +111,17 @@ router.get("/profile/:ext/:tag", async (req, res) => {
 
     try {
         
-        let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`, options)
-        let data = await real.json();
+        const real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`, options)
+        const data = await real.json();
 
         //console.log("Fest test: ", apiData.data)
-        //const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`, options)
+        const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`, options)
         //console.log("Resonse 2: ", response2)
-        //const data2 = await real2.json();
+        const data2 = await real2.json();
 
         // const real3 = await fetch(`https://api.henrikdev.xyz/valorant/v3/by-puuid/matches/na/${data.data.puuid}`)
         // const data3 = await real3.json();
-        // this might be too much
+        
 
         const info = {
             puuid: data.data.puuid,
@@ -130,10 +130,10 @@ router.get("/profile/:ext/:tag", async (req, res) => {
             region: data.data.region,
             account_level: data.data.account_level,
             card: data.data.card,
-            //currenttier: data2.data.currenttier,
-            //elo: data2.data.elo,
-            //images: data2.data.images,// {lareg, small, triangle_down, triangle_up}, //this is rank
-            //ranking_in_tier: data2.data.ranking_in_tier, 
+            currenttier: data2.data.currenttier,
+            elo: data2.data.elo,
+            images: data2.data.images,// {lareg, small, triangle_down, triangle_up}, //this is rank
+            ranking_in_tier: data2.data.ranking_in_tier, 
             matchHistory_small: "Work in progress", //data3.data,
             //The following is derived data that i will calulate above
             wr: "Testing",
@@ -141,14 +141,6 @@ router.get("/profile/:ext/:tag", async (req, res) => {
             favGun: "Gun",
             friends: ["This will take math"]
         }
-        // if (profile.wr === null) { update it before it gets to the page }
-
-        
-        //const context = await info.json();
-        
-        // search match history by data.puuid
-        // get w/l, champions, common players from match history
-        // package all relevant data and send to user show page as context
 
         res.json(info)
     } catch(err) {
