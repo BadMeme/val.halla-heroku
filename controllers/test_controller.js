@@ -68,7 +68,7 @@ router.get('/test', async (req, res) =>{
                     region: step1.data.region,
                     puuid: step1.data.puuid,
                 })
-
+                console.log(step2)
                 const info = {
                     puuid: step1.data.puuid,
                     name: step1.data.name,
@@ -111,53 +111,6 @@ router.get("/users", async (req,res)=>{
 })
 
 //Profile Show 
-// router.get("/profile/:ext/", async (req, res) => {
-
-//     const options = {
-//         method: "GET",
-//         headers: {
-//           Authorization: REACT_APP_API_KEY,
-//         },
-//     }
-
-//     try {
-//         let [profile] = await Models.Player.find({gameName: req.params.ext})
-//         console.log("user: " + profile)
-//         data = await profile.json();
-//         res.send(data)
-
-
-//     } catch (err) {
-//         console.log(err)
-//     }
-
-// })
-
-// //Profile Show 
-// router.get("/profile/:ext/", async (req, res) => {
-
-//     const options = {
-//         method: "GET",
-//         headers: {
-//           Authorization: REACT_APP_API_KEY,
-//         },
-//     }
-
-//     try {
-//         let [profile] = await Models.Player.find({gameName: req.params.ext})
-//         console.log("user: " + profile)
-//         data = await profile.json();
-//         res.send(data)
-
-
-//     } catch (err) {
-//         console.log(err)
-//     }
-
-// })
-
-
-//Profile Show TEST
 router.get("/profile/:ext/:tag", async (req, res) => {
     
     try {
@@ -167,26 +120,22 @@ router.get("/profile/:ext/:tag", async (req, res) => {
             name: req.params.ext,
             tag: req.params.tag
         })
-        const data = getAcct
+        const data = getAcct //these are really just here because it made refactoring faster
 
-        console.log(data.data)
-        //const real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`, options)
-        //const data = await real.json();
+        //console.log(data.data)
 
         const getAcctData = await getThisBread.getMatchesByPUUID({
             region: data.data.region,
             puuid: data.data.puuid,
         })
-        const data2 = getAcctData
+        const data2 = getAcctData //these are really just here because it made refactoring faster
 
-        //console.log("Fest test: ", apiData.data)
-        //const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`, options)
-        //console.log("Resonse 2: ", response2)
-        //const data2 = await real2.json();
-
-        // const real3 = await fetch(`https://api.henrikdev.xyz/valorant/v3/by-puuid/matches/na/${data.data.puuid}`)
-        // const data3 = await real3.json();
-        
+        const getRankData = await getThisBread.getMMRHistoryByPUUID({
+            region: data.data.region,
+            puuid: data.data.puuid
+        })
+        const data3 = getRankData
+        console.log (data3)
 
         const info = {
             puuid: data.data.puuid,
@@ -196,9 +145,11 @@ router.get("/profile/:ext/:tag", async (req, res) => {
             account_level: data.data.account_level,
             card: data.data.card,
             currenttier: data2.data.currenttier,
-            elo: data2.data.elo,
+            elo: data3.data[0].elo,
             images: data2.data.images,// {lareg, small, triangle_down, triangle_up}, //this is rank
-            ranking_in_tier: data2.data.ranking_in_tier, 
+            ranking_in_tier: data2.data.ranking_in_tier,
+            currenttierpatched: data3.data[0].currenttierpatched, 
+            rankedData: data3.data,
             matchHistory_small: "Work in progress", //data3.data,
             //The following is derived data that i will calulate above
             wr: "Testing",
