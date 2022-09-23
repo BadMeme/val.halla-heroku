@@ -101,12 +101,12 @@ router.get("/users", async (req,res)=>{
 //Profile Show TEST
 router.get("/profile/:ext/:tag", async (req, res) => {
 
-    const options = {
-        method: "GET",
-        headers: {
-          Authorization: REACT_APP_API_KEY,
-        },
-    }
+    // const options = {
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: REACT_APP_API_KEY,
+    //     },
+    // }
 
     try {
         
@@ -140,7 +140,6 @@ router.get("/profile/:ext/:tag", async (req, res) => {
             favGun: "Gun",
             friends: ["This will take math"]
         }
-        // if (profile.wr === null) { update it before it gets to the page }
 
         
         //const context = await info.json();
@@ -149,7 +148,7 @@ router.get("/profile/:ext/:tag", async (req, res) => {
         // get w/l, champions, common players from match history
         // package all relevant data and send to user show page as context
 
-        res.send(info)
+        res.json(info)
     } catch(err) {
         console.log(err)
     }
