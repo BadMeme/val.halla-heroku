@@ -150,7 +150,7 @@ router.get("/profile/:ext/:tag", async (req, res) => {
         // get w/l, champions, common players from match history
         // package all relevant data and send to user show page as context
 
-        res.send(info)
+        res.json(info)
     } catch(err) {
         console.log(err)
     }
