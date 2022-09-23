@@ -157,22 +157,7 @@ router.get("/profile/:ext/:tag", async (req, res) => {
             friends: ["This will take math"]
         }
 
-        const mongoCheck = await Models.Player.findOne({gameName: info.name, tag: info.tag})
-        console.log ("MongoCheck: ", mongoCheck)
-        if (mongoCheck === null) {
-            console.log("Creating a dude")
-            await Models.Player.create({
-                puuid: info.puuid,
-                gameName: info.name,
-                tag: info.tag,
-                card: info.card,
-                competitiveTier: info.currenttier,
-                //rank: info.currenttierpatched,
-                rankedRating: info.ranking_in_tier,
-                //leaderboardRank
-
-            })
-        }
+        
         res.json(info)
     } catch(err) {
         console.log(err)
