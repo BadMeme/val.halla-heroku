@@ -152,10 +152,3 @@ async function seedDatabase () {
     mongoose.connection.close()
 }
 //seedUsers(testUsers);
-
-//seedDatabase ()
-
-//updatePlayers()
-
-console.log(VAPI.getAccount({name: "heaviside", tag: "JSON"}))
-mongoose.connection.close()

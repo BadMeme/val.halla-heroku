@@ -17,7 +17,8 @@ const getThisBread = new apiAccess()
 
 // Model Import
 const Models = require('../models/models.js');
-const {createUserToken} = require('../middleware/auth')
+const {createUserToken} = require('../middleware/auth');
+const { models, Model } = require('mongoose');
 
 // Routes ('/test/:ext')
 
@@ -113,8 +114,7 @@ router.get("/users", async (req,res)=>{
 router.get("/profile/:ext/:tag", async (req, res) => {
     
     try {
-        
-
+    
         const getAcct = await getThisBread.getAccount({
             name: req.params.ext,
             tag: req.params.tag
@@ -157,6 +157,22 @@ router.get("/profile/:ext/:tag", async (req, res) => {
             friends: ["This will take math"]
         }
 
+        const mongoCheck = await Models.Player.findOne({gameName: info.name, tag: info.tag})
+        console.log ("MongoCheck: ", mongoCheck)
+        if (mongoCheck === null) {
+            console.log("Creating a dude")
+            await Models.Player.create({
+                puuid: info.puuid,
+                gameName: info.name,
+                tag: info.tag,
+                card: info.card,
+                competitiveTier: info.currenttier,
+                //rank: info.currenttierpatched,
+                rankedRating: info.ranking_in_tier,
+                //leaderboardRank
+
+            })
+        }
         res.json(info)
     } catch(err) {
         console.log(err)
