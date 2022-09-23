@@ -105,16 +105,17 @@ router.get("/profile/:ext/:tag", async (req, res) => {
         method: "GET",
         headers: {
           Authorization: REACT_APP_API_KEY,
+          //Host: ''
         },
     }
 
     try {
         
-        let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`)
+        let real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`, options)
         let data = await real.json();
 
         //console.log("Fest test: ", apiData.data)
-        const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`)
+        const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`, options)
         //console.log("Resonse 2: ", response2)
         const data2 = await real2.json();
 
