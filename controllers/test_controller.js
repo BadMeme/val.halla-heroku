@@ -30,10 +30,10 @@ router.get('/', async (req, res) =>{
             try {
                 const response = await Models.Player.find({leaderboardRank: {$gte: 1} && {$lte: 4}})
                 console.log("test: ", response)
-                const lbjson = await response.json()
-                console.log("test: ", lbjson[0])
-                leaderBoard = [lbjson[0], lbjson[1], lbjson[2], lbjson[3]]
-                res.send(test) //currently fetching leaderboard from the backend instead of API call
+                // const lbjson = await response.json()
+                // console.log("test: ", lbjson[0])
+                leaderBoard = [response[0], response[1], response[2], response[3]]
+                res.send(leaderBoard) //currently fetching leaderboard from the backend instead of API call
             } catch (err) {
                 console.log(err);
             }
@@ -159,15 +159,7 @@ router.get("/users", async (req,res)=>{
 
 //Profile Show TEST
 router.get("/profile/:ext/:tag", async (req, res) => {
-
-    const options = {
-        method: "GET",
-        headers: {
-          Authorization: REACT_APP_API_KEY,
-          //Host: ''
-        },
-    }
-
+    
     try {
         
 
@@ -175,15 +167,17 @@ router.get("/profile/:ext/:tag", async (req, res) => {
             name: req.params.ext,
             tag: req.params.tag
         })
-        const data = await getAcct.json();
+        const data = getAcct
+
+        console.log(data.data)
         //const real = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${req.params.ext}/${req.params.tag}`, options)
         //const data = await real.json();
 
         const getAcctData = await getThisBread.getMatchesByPUUID({
-            region: one.data.region,
-            puuid: one.data.puuid,
+            region: data.data.region,
+            puuid: data.data.puuid,
         })
-        const data2 = await getAcctData.json();
+        const data2 = getAcctData
 
         //console.log("Fest test: ", apiData.data)
         //const real2 = await fetch(`https://api.henrikdev.xyz/valorant/v1/by-puuid/mmr/na/${data.data.puuid}`, options)
